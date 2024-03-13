@@ -5,20 +5,19 @@ import matplotlib.pyplot as plt
 from pyecharts.charts import Line
 from pyecharts import options as opts
 from streamlit_echarts import st_pyecharts
-# pip install streamlit
-# pip install streamlit-echarts
+
 
 image_path = '/Users/apple/Downloads/510_final_project/1.png'
 df = pd.read_csv('pal_index.csv')
 
 
 
-col1, col2 = st.columns([1, 5])  # 您可以根据需要调整这里的比例
+col1, col2 = st.columns([1, 5])  
 
-with col1:  # 在第一列中
-    st.image(image_path, width=100)  # 您可以根据需要调整图片宽度
+with col1: 
+    st.image(image_path, width=100)  
 
-with col2:  # 在第二列中
+with col2: 
     st.title('Palworld Pal Stats Calculator')
 
 #定义数值计算函数
@@ -42,8 +41,7 @@ def calculate_stats(pal_name, level):
         growth = growth_rates[stat]
         racial_value = base_stats[stat]
         base_value = base_values[stat]
-        # 属性值的计算：相应的基础值 + ((种族值 * 增长率) * 等级)
-        # 这里等级不需要减一，因为基础值是0级的基础值，而不是1级的
+
         stats_at_level[stat] = base_value + ((racial_value * growth) * level)
     return stats_at_level
 
@@ -59,13 +57,12 @@ if selected_pal != 'Choose a Pal' or comparison_pal != 'Choose a Pal':
         comparison_stats = calculate_stats(comparison_pal, level)
        
 
-    # Define the names and levels
     name1 = selected_pal
     name2 = comparison_pal
     selected_level = level
     levels = range(1, 50)
     if selected_pal != 'Choose a Pal' and comparison_pal != 'Choose a Pal':
-    # Calculate the Atk/HP/Def values for the given names and levels
+  
         atk_values_name1 = [float(df[df["Name"] == name1]["Atk"].values[0] + 6.5 * level) for level in levels]
         atk_values_name2 = [float(df[df["Name"] == name2]["Atk"].values[0] + 6.5 * level) for level in levels]
         hp_values_name1 = [float(df[df["Name"] == name1]["HP"].values[0] + 12.5 * level) for level in levels]
@@ -90,9 +87,9 @@ if selected_pal != 'Choose a Pal' or comparison_pal != 'Choose a Pal':
                             legend_opts=opts.LegendOpts(selected_mode="single", pos_left="right"))
             .set_series_opts(label_opts=opts.LabelOpts(is_show=False),
                             markline_opts=opts.MarkLineOpts(
-                            # 标记线数据
+                           
                             data=[
-                                # MarkLineItem：标记线数据项
+                               
                                 opts.MarkLineItem(                  
                                     name="自定义线",
                                     x = selected_level,              
@@ -123,9 +120,9 @@ if selected_pal != 'Choose a Pal' or comparison_pal != 'Choose a Pal':
                             legend_opts=opts.LegendOpts(selected_mode="single", pos_left="right"))
             .set_series_opts(label_opts=opts.LabelOpts(is_show=False),
                             markline_opts=opts.MarkLineOpts(
-                            # 标记线数据
+                    
                             data=[
-                                # MarkLineItem：标记线数据项
+                             
                                 opts.MarkLineItem(                  
                                     name="自定义线",
                                     x = selected_level,              
